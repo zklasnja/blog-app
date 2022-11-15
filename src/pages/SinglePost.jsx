@@ -55,18 +55,29 @@ export default function SinglePost() {
     }
 
     const onEditComment = async (commentId) => {
-        const editedComment = await PostsService.editComment(id, commentId);
-
         const commentData = await PostsService.getComment(id, commentId)
         setNewComment({...newComment, text: commentData.text})
+        setNewCommentId(commentId);
+    }
+    
+    const handleEditComment = (e) => {
+        e.preventDefault();
 
-        history.push(`${id}`)
+        const handleEditedComment = async () => {
+            await PostsService.editComment(id, newCommentId, newComment);
+            const response = await PostsService.get(id);
+            setComment(response.comments)
+            setNewComment("");
+            setNewCommentId("");
+        }
+
+        if (handleEditedComment) {
+            handleEditedComment();
+            history.push(`${id}`)
+        }
+
     }
 
-    const handleEditComment = async (commentId) => {
-        const commentData = await PostsService.getComment(id, commentId)
-        setNewComment({...newComment, text: commentData.text})
-    }
 
     const handleCommentAlert = async (commentId) => {
         const commentData = await PostsService.getComment(id, commentId)
@@ -94,7 +105,7 @@ export default function SinglePost() {
             <AddComment
                 newComment={newComment}
                 setNewComment={setNewComment}
-                onAddComment={newComment ? handleEditComment : onAddComment}
+                onAddComment={newCommentId ? handleEditComment : onAddComment}
             />
         </div>
     )

@@ -40,10 +40,9 @@ class PostsService {
         return request;
     }
 
-    editComment(postId, commentId) {
-        const request = axiosInstance.put(`/posts/${postId}/comments/${commentId}`);
-        console.log(request);
-        return request.data;
+    async editComment(postId, commentId, request) {
+        const newRequest = await axiosInstance.put(`/posts/${postId}/comments/${commentId}`, request);
+        return newRequest.data;
     }
 
     async getComment(id, commentId){

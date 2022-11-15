@@ -20,9 +20,6 @@ export default function Router(){
           <Route path='/edit/:id'>
             <AddPost />
           </Route>
-          <Route exact path='/post/:id/comments/:commentId'>
-            <AddComment />
-          </Route>
         </Switch>
     )
 }
