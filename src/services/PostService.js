@@ -3,7 +3,7 @@ import { axiosInstance } from './AxiosService';
 class PostsService {
 
     async getAll() {
-        const response = await axiosInstance.get('/posts?filter={"include":["comments"]}');
+        const response = await axiosInstance.get('/posts');
         
         return response.data;
     }
@@ -54,6 +54,12 @@ class PostsService {
 
     async deleteAllComments(postId){
         const request = await axiosInstance.delete(`/posts/${postId}/comments`);
+        return request;
+    }
+
+    async getCommentsCount(postId){
+        const request = await axiosInstance.get(`/posts/${postId}/comments/count`);
+
         return request;
     }
 }

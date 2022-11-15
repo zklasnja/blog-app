@@ -15,6 +15,7 @@ export default function SinglePost() {
         text: ""
     });
     const [newCommentId, setNewCommentId] = useState();
+    const [commentCount, setCommentCount] = useState(0);
 
     const formattedDate = useFormattedDate(post ? post.createdAt : '');
 
@@ -23,6 +24,7 @@ export default function SinglePost() {
             const response = await PostsService.get(id);
             setSinglePost(response);
             setComment(response.comments)
+            onCommentsCount();
         }
     }
 
@@ -91,6 +93,11 @@ export default function SinglePost() {
         setComment()
     }
 
+    const onCommentsCount = async () => {
+        const response = await PostsService.getCommentsCount(id)
+        setCommentCount(response.data.count);
+    }
+
     return (
         <div>
             <SinglePostComponent
@@ -101,6 +108,7 @@ export default function SinglePost() {
                 onEditComment={onEditComment}
                 commentAlert={handleCommentAlert}
                 onDeleteAllComments={handleDeleteAllComments}
+                commentCount={commentCount}
             />
             <AddComment
                 newComment={newComment}

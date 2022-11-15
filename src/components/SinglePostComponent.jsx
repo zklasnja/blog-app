@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function SinglePostComponent({ post, comments, formattedDate, onDeleteComment, onEditComment, commentAlert, onDeleteAllComments }) {
+export default function SinglePostComponent({ post, comments, formattedDate, onDeleteComment, onEditComment, commentAlert, onDeleteAllComments, commentCount }) {
     return (
         <div>
             <h2>{post && post.title}</h2>
             <p>Created at: {formattedDate}</p>
             <p>{post && post.text}</p>
             <hr />
+            <p>Number of comments: {commentCount}</p>
             Comments:
             <ul>
                 {!!comments?.length && <button className="btn btn-blue" onClick={() => onDeleteAllComments()}>Delete</button>}
